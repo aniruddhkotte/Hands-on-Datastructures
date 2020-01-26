@@ -1,54 +1,61 @@
-class Node {
+//PostOrder traversal
+
+class Node{
+    int data;
     Node left;
     Node right;
-    Node parent;
-    int data;
 
-    Node(int data){
-        this.data = data;
-        this.left = null;
-        this.right = null;
-        this.parent = null;
+    Node(int val){
+        data = val;
     }
 }
 
-class BinaryTree{
-    Node root = new Node(10);
+class TreeFunctinalities{
+    void traversal(Node startNode){
+        //System.out.println(startNode.data);
+        if(startNode.left != null){
+            traversal(startNode.left);
+            System.out.println(startNode.left.data);
+        }
+        if(startNode.right != null){
+            traversal(startNode.right);
+            System.out.println(startNode.right.data);
+        }
+        
+        
+    }
 
-    void iterateAndAdd(Node currNode, int data){
-        if(data < currNode.data){
-            if(currNode.left == null){
-                Node temp = new Node(data);
-                temp.parent = currNode;
-                currNode.left = temp;
-                System.out.println("Added "+data+" to parent "+currNode.data);
+    void addNode(Node startNode, int data){
+        if(startNode.data > data){
+            if(startNode.left == null){
+                startNode.left = new Node(data);
             }else{
-                iterateAndAdd(currNode.left, data);
+                addNode(startNode.left, data);
             }
         }else{
-            if(currNode.right == null){
-                Node temp = new Node(data);
-                temp.parent = currNode;
-                currNode.right = temp;
-                System.out.println("Added "+data+" to parent "+currNode.data);
+            if(startNode.right == null){
+                startNode.right = new Node(data);
             }else{
-                iterateAndAdd(currNode.right, data);
+                addNode(startNode.right, data);
             }
         }
     }
-
-    void addNode(int data){
-        Node currNode = root;
-        iterateAndAdd(root, data);
-    }
 }
 
-class BinarySearchTree{
+class CustomTree{
     public static void main(String[] args) {
-        BinaryTree binaryTree = new BinaryTree();
-        binaryTree.addNode(12);
-        binaryTree.addNode(2);
-        binaryTree.addNode(20);
-        binaryTree.addNode(3);
+        Node rootNode = new Node(10);
+        TreeFunctinalities treeFunctinalities = new TreeFunctinalities();
+
+        treeFunctinalities.addNode(rootNode, 20);
+        treeFunctinalities.addNode(rootNode, 1);
+        treeFunctinalities.addNode(rootNode, 54);
+        treeFunctinalities.addNode(rootNode, 3);
+        treeFunctinalities.addNode(rootNode, 5);
+        treeFunctinalities.addNode(rootNode, 9);
+        treeFunctinalities.addNode(rootNode, 2);
+
+        treeFunctinalities.traversal(rootNode);
+        System.out.println(rootNode.data);
     }
 }
